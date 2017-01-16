@@ -1,2 +1,3 @@
 # spready
-A spreadsheet compiler
+
+A spreadsheet compiler.
