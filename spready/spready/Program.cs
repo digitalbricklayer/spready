@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Spready.Parser;
 
 namespace Spready
 {
@@ -15,8 +16,6 @@ namespace Spready
             object invokedVerbInstance = null;
             if (!CommandLine.Parser.Default.ParseArguments(args, options, (verb, subOptions) =>
             {
-                // if parsing succeeds the verb name and correct instance
-                // will be passed to onVerbCommand delegate (string,object)
                 invokedVerb = verb;
                 invokedVerbInstance = subOptions;
             }))
@@ -27,10 +26,13 @@ namespace Spready
             switch (invokedVerb)
             {
                 case "new":
-                    {
-                        var newSubOptions = (NewSubOptions) invokedVerbInstance;
-                        new Program().CreateNewSpreadsheet(newSubOptions);
-                    }
+                    var newSubOptions = (NewSubOptions) invokedVerbInstance;
+                    new Program().CreateNewSpreadsheet(newSubOptions);
+                    break;
+
+                case "compile":
+                    var compileSubOptions = (CompileSubOptions) invokedVerbInstance;
+                    new Program().CompileSpreadsheet(compileSubOptions);
                     break;
             }
         }
@@ -43,9 +45,17 @@ namespace Spready
             }
         }
 
-        private void CompileSpreadsheet(CompileSubOptions newSubOptions)
+        private void CompileSpreadsheet(CompileSubOptions compileSubOptions)
         {
-            throw new NotImplementedException();
+            foreach (var inputFilename in compileSubOptions.Inputs)
+            {
+                // Parse the source code...
+                var spreadyParser = new SpreadyParser();
+                var parseResult = spreadyParser.Parse(inputFilename);
+                if (parseResult.Status != ParseStatus.Success) return;
+                var compiler = new SpreadsheetCompiler();
+                compiler.Compile(parseResult.Root, inputFilename);
+            }
         }
     }
 }
