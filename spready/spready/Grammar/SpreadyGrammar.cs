@@ -13,8 +13,8 @@ namespace Spready.Grammar
                             LanguageFlags.NewLineBeforeEOF;
 
             var workspaceName = new StringLiteral("workspace name", "\"", StringOptions.NoEscapes);
-            workspaceName.AstConfig.NodeType = typeof (WorkspaceNameNode);
-            var workspace = new NonTerminal("workspace", typeof(WorkspaceNode));
+            workspaceName.AstConfig.NodeType = typeof (WorksheetNameNode);
+            var workspace = new NonTerminal("workspace", typeof(WorksheetNode));
             workspace.Rule = workspaceName + ToTerm("{") + ToTerm("}");
             var workspaceList = new NonTerminal("workspace list", typeof(SpreadyNode));
             workspaceList.Rule = MakePlusRule(workspaceList, ToTerm(","), workspace);

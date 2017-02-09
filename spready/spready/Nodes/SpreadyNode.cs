@@ -9,20 +9,20 @@ namespace Spready.Nodes
     {
         public SpreadyNode()
         {
-            WorkspaceNodes = new List<WorkspaceNode>();
+            WorksheetNodes = new List<WorksheetNode>();
         }
 
         /// <summary>
-        /// Gets the inner workspace nodes.
+        /// Gets the inner worksheet nodes.
         /// </summary>
-        public List<WorkspaceNode> WorkspaceNodes { get; }
+        public List<WorksheetNode> WorksheetNodes { get; }
 
         public override void Init(AstContext context, ParseTreeNode treeNode)
         {
             base.Init(context, treeNode);
             foreach (var childNode in treeNode.ChildNodes)
             {
-                WorkspaceNodes.Add((WorkspaceNode) AddChild("workspace", childNode));
+                WorksheetNodes.Add((WorksheetNode) AddChild("workspace", childNode));
             }
         }
     }

@@ -63,8 +63,8 @@
     <Compile Include="CompileSubOptions.cs" />
     <Compile Include="NewSubOptions.cs" />
     <Compile Include="Nodes\SpreadyNode.cs" />
-    <Compile Include="Nodes\WorkspaceNameNode.cs" />
-    <Compile Include="Nodes\WorkspaceNode.cs" />
+    <Compile Include="Nodes\WorksheetNameNode.cs" />
+    <Compile Include="Nodes\WorksheetNode.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Parser\ParseResult.cs" />
     <Compile Include="Parser\ParseStatus.cs" />

@@ -13,12 +13,12 @@ namespace Spready
             // Create the spreadsheet
             using (var newSpreadsheet = new SLDocument())
             {
-                // Remove the default workspace
+                // Remove the default worksheet
                 newSpreadsheet.AddWorksheet(TemporaryWorksheetName);
                 newSpreadsheet.DeleteWorksheet("Sheet1");
-                foreach (var workspaceNode in theRootNode.WorkspaceNodes)
+                foreach (var worksheetNode in theRootNode.WorksheetNodes)
                 {
-                    newSpreadsheet.AddWorksheet(workspaceNode.Name);
+                    newSpreadsheet.AddWorksheet(worksheetNode.Name);
                 }
                 newSpreadsheet.DeleteWorksheet(TemporaryWorksheetName);
                 newSpreadsheet.SaveAs(GetOutputFileFrom(inputFilename));
