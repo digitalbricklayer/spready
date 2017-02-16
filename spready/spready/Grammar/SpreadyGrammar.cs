@@ -36,7 +36,7 @@ namespace Spready.Grammar
             internalSheetCellReference.Rule = cellName;
             infraSheetCellReference.Rule = worksheetName + ToTerm("!") + cellName;
             expression.Rule = cellReference + cellValue;
-            expressionList.Rule = MakeStarRule(expressionList, expression);
+            expressionList.Rule = MakeStarRule(expressionList, ToTerm(","), expression);
             worksheet.Rule = worksheetName + ToTerm("{") + expressionList + ToTerm("}");
             worksheetList.Rule = MakePlusRule(worksheetList, worksheet);
 
