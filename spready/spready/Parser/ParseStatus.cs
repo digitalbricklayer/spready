@@ -1,6 +1,6 @@
 ﻿namespace Spready.Parser
 {
-    internal enum ParseStatus
+    public enum ParseStatus
     {
         Failed,
         Success

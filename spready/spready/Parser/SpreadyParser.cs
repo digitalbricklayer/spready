@@ -7,7 +7,7 @@ using Spready.Nodes;
 
 namespace Spready.Parser
 {
-    internal class SpreadyParser
+    public class SpreadyParser
     {
         private readonly SpreadyGrammar grammar = new SpreadyGrammar();
 
@@ -16,7 +16,7 @@ namespace Spready.Parser
         /// </summary>
         /// <param name="filename">Path to the spready source file.</param>
         /// <returns>Parse result.</returns>
-        internal ParseResult<SpreadyNode> Parse(string filename)
+        public ParseResult<SpreadyNode> Parse(string filename)
         {
             var language = new LanguageData(grammar);
             var parser = new Irony.Parsing.Parser(language);

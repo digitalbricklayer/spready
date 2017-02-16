@@ -39,6 +39,7 @@
       <HintPath>..\packages\CommandLineParser.1.9.71\lib\net40\CommandLine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=MSIL">
       <HintPath>..\packages\Irony.0.9.1\lib\net40\Irony.dll</HintPath>
       <Private>True</Private>
@@ -62,6 +63,14 @@
   <ItemGroup>
     <Compile Include="CompileSubOptions.cs" />
     <Compile Include="NewSubOptions.cs" />
+    <Compile Include="Nodes\CellNameNode.cs" />
+    <Compile Include="Nodes\CellNumberNode.cs" />
+    <Compile Include="Nodes\CellReferenceNode.cs" />
+    <Compile Include="Nodes\CellStringNode.cs" />
+    <Compile Include="Nodes\CellValueNode.cs" />
+    <Compile Include="Nodes\ExpressionNode.cs" />
+    <Compile Include="Nodes\InfraSheetCellReferenceNode.cs" />
+    <Compile Include="Nodes\InternalSheetCellReferenceNode.cs" />
     <Compile Include="Nodes\SpreadyNode.cs" />
     <Compile Include="Nodes\WorksheetNameNode.cs" />
     <Compile Include="Nodes\WorksheetNode.cs" />

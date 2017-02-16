@@ -4,9 +4,9 @@ using Irony.Parsing;
 
 namespace Spready.Parser
 {
-    internal class ParseResult<T>
+    public class ParseResult<T>
     {
-        internal ParseResult(ParseStatus theParseStatus, ParseTree theParseTree)
+        public ParseResult(ParseStatus theParseStatus, ParseTree theParseTree)
         {
             Errors = new List<string>();
             Status = theParseStatus;
@@ -14,7 +14,7 @@ namespace Spready.Parser
             Root = (T)theParseTree.Root.AstNode;
         }
 
-        internal ParseResult(ParseStatus theParseStatus, IEnumerable<string> theErrors)
+        public ParseResult(ParseStatus theParseStatus, IEnumerable<string> theErrors)
         {
             Errors = theErrors.ToList();
             Status = theParseStatus;
@@ -23,17 +23,17 @@ namespace Spready.Parser
         /// <summary>
         /// Gets a list of errors found whilst parsing the expression.
         /// </summary>
-        internal IReadOnlyCollection<string> Errors { get; private set; }
+        public IReadOnlyCollection<string> Errors { get; private set; }
 
         /// <summary>
         /// Gets the parse status.
         /// </summary>
-        internal ParseStatus Status { get; private set; }
+        public ParseStatus Status { get; private set; }
 
         /// <summary>
         /// Gets the root AST node.
         /// </summary>
-        internal T Root { get; set; }
+        public T Root { get; set; }
 
         /// <summary>
         /// Gets the Irony parse tree.
