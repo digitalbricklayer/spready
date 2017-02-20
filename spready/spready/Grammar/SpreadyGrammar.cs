@@ -45,7 +45,7 @@ namespace Spready.Grammar
 
             // Punctuation  and transient terms
             RegisterBracePair("{", "}");
-            MarkPunctuation("{", "}");
+            MarkPunctuation("{", "}", ",", "!");
         }
     }
 }
