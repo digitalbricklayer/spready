@@ -4,14 +4,14 @@ using Irony.Parsing;
 
 namespace Spready.Nodes
 {
-    public class LocalSheetCellReferenceNode : AstNode
+    public class FunctionCallNode : AstNode
     {
-        public string CellName { get; private set; }
+        public string FunctionName { get; private set; }
 
         public override void Init(AstContext context, ParseTreeNode treeNode)
         {
             base.Init(context, treeNode);
-            CellName = treeNode.ChildNodes[0].FindTokenAndGetText();
+            FunctionName = treeNode.ChildNodes[0].Token.Text;
         }
     }
 }

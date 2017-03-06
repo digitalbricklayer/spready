@@ -16,8 +16,8 @@ namespace Spready.Nodes
         public override void Init(AstContext context, ParseTreeNode treeNode)
         {
             base.Init(context, treeNode);
-            var x = treeNode.FindTokenAndGetText();
-            Value = x.Trim('"');
+            var quotedValue = treeNode.FindTokenAndGetText();
+            Value = quotedValue.Trim('"');
         }
     }
 }

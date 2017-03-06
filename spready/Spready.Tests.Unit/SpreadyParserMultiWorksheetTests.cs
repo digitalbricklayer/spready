@@ -5,11 +5,11 @@ using Spready.Parser;
 namespace Spready.Tests.Unit
 {
     [TestFixture]
-    public class SpreadyParserEmptySheetTests
+    public class SpreadyParserMultiWorksheetTests
     {
-        private readonly string InputFilename = "Empty.spready";
-        private readonly string OutputFilename = "Empty.xlsx";
-        private readonly string SourceCode = @"Sheet1 { }";
+        private const string InputFilename = "MultipleWorksheets.spready";
+        private const string OutputFilename = "MultipleWorksheets.xlsx";
+        private const string SourceCode = @"Sheet1 { A1 10, A2 20 } Sheet2 { A1=SUM(Sheet1!A1, Sheet1!A2) }";
         private string inputPath;
         private string outputPath;
 
@@ -29,7 +29,7 @@ namespace Spready.Tests.Unit
         }
 
         [Test]
-        public void ParseEmptySheetSourceFileReturnsSuccess()
+        public void ParseSourceFileReturnsSuccess()
         {
             var parser = new SpreadyParser();
             var result = parser.Parse(inputPath);

@@ -21,21 +21,29 @@ namespace Spready
                 {
                     newSpreadsheet.AddWorksheet(worksheetNode.Name);
                     // Add sheet contents
-                    foreach (var expressionNode in worksheetNode.Expressions)
+                    foreach (var expressionNode in worksheetNode.Statements)
                     {
-                        if (expressionNode.CellReference.CellReference is InternalSheetCellReferenceNode)
+                        if (expressionNode is SimpleStatementNode)
                         {
-                            var internalCellReference = (InternalSheetCellReferenceNode) expressionNode.CellReference.CellReference;
-                            if (expressionNode.CellValue.Value is CellNumberNode)
+                            var simpleStatementNode = (SimpleStatementNode) expressionNode;
+                            if (simpleStatementNode.CellReference.CellReference is LocalSheetCellReferenceNode)
                             {
-                                var number = (CellNumberNode)expressionNode.CellValue.Value;
-                                newSpreadsheet.SetCellValue(internalCellReference.CellName, number.Value);
+                                var internalCellReference = (LocalSheetCellReferenceNode)simpleStatementNode.CellReference.CellReference;
+                                if (simpleStatementNode.CellValue.Value is CellNumberNode)
+                                {
+                                    var number = (CellNumberNode)simpleStatementNode.CellValue.Value;
+                                    newSpreadsheet.SetCellValue(internalCellReference.CellName, number.Value);
+                                }
+                                else if (simpleStatementNode.CellValue.Value is CellStringNode)
+                                {
+                                    var number = (CellStringNode)simpleStatementNode.CellValue.Value;
+                                    newSpreadsheet.SetCellValue(internalCellReference.CellName, number.Value);
+                                }
                             }
-                            else if (expressionNode.CellValue.Value is CellStringNode)
-                            {
-                                var number = (CellStringNode)expressionNode.CellValue.Value;
-                                newSpreadsheet.SetCellValue(internalCellReference.CellName, number.Value);
-                            }
+                        }
+                        else if (expressionNode is EqualsStatementNode)
+                        {
+                            var equalsStatementNode = (EqualsStatementNode) expressionNode;
                         }
                     }
                 }

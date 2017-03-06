@@ -9,22 +9,22 @@ namespace Spready.Nodes
     {
         public string Name { get { return WorksheetName.Name; } }
         public WorksheetNameNode WorksheetName { get; private set; }
-        public IList<ExpressionNode> Expressions { get; private set; }
-        public ExpressionListNode ExpressionList { get; private set; }
+        public IList<StatementNode> Statements { get; private set; }
+        public ExpressionNodeList ExpressionList { get; private set; }
 
         public WorksheetNode()
         {
-            Expressions = new List<ExpressionNode>();
+            Statements = new List<StatementNode>();
         }
 
         public override void Init(AstContext context, ParseTreeNode treeNode)
         {
             base.Init(context, treeNode);
             WorksheetName = (WorksheetNameNode) treeNode.ChildNodes[0].AstNode;
-            ExpressionList = (ExpressionListNode) treeNode.ChildNodes[1].AstNode;
+            ExpressionList = (ExpressionNodeList) treeNode.ChildNodes[1].AstNode;
             foreach (var childNode in ExpressionList.ChildNodes)
             {
-                Expressions.Add((ExpressionNode) childNode);
+                Statements.Add((StatementNode) childNode);
             }
         }
     }

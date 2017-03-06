@@ -46,6 +46,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SpreadyParserEqualsExpressionTests.cs" />
+    <Compile Include="SpreadyParserMultiWorksheetTests.cs" />
     <Compile Include="SpreadyParserSimpleExpressionTests.cs" />
     <Compile Include="SpreadyParserEmptySheetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -63,15 +63,21 @@
   <ItemGroup>
     <Compile Include="CompileSubOptions.cs" />
     <Compile Include="NewSubOptions.cs" />
+    <Compile Include="Nodes\ArgumentListNode.cs" />
     <Compile Include="Nodes\CellNameNode.cs" />
     <Compile Include="Nodes\CellNumberNode.cs" />
     <Compile Include="Nodes\CellReferenceNode.cs" />
     <Compile Include="Nodes\CellStringNode.cs" />
     <Compile Include="Nodes\CellValueNode.cs" />
+    <Compile Include="Nodes\EqualsExpressionNode.cs" />
     <Compile Include="Nodes\ExpressionNode.cs" />
+    <Compile Include="Nodes\ExpressionNodeList.cs" />
+    <Compile Include="Nodes\FunctionCallNode.cs" />
+    <Compile Include="Nodes\SimpleExpressionNode.cs" />
     <Compile Include="Nodes\InfraSheetCellReferenceNode.cs" />
     <Compile Include="Nodes\InternalSheetCellReferenceNode.cs" />
     <Compile Include="Nodes\SpreadyNode.cs" />
+    <Compile Include="Nodes\StatementNode.cs" />
     <Compile Include="Nodes\WorksheetNameNode.cs" />
     <Compile Include="Nodes\WorksheetNode.cs" />
     <Compile Include="Options.cs" />
