@@ -22,9 +22,9 @@ namespace Spready.Nodes
             base.Init(context, treeNode);
             WorksheetName = (WorksheetNameNode) treeNode.ChildNodes[0].AstNode;
             ExpressionList = (ExpressionNodeList) treeNode.ChildNodes[1].AstNode;
-            foreach (var childNode in ExpressionList.ChildNodes)
+            foreach (var childNode in ExpressionList.Expressions)
             {
-                Statements.Add((StatementNode) childNode);
+                Statements.Add(childNode.InnerStatement);
             }
         }
     }

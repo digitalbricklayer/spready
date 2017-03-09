@@ -75,11 +75,12 @@
     <Compile Include="Nodes\FunctionCallNode.cs" />
     <Compile Include="Nodes\SimpleExpressionNode.cs" />
     <Compile Include="Nodes\InfraSheetCellReferenceNode.cs" />
-    <Compile Include="Nodes\InternalSheetCellReferenceNode.cs" />
+    <Compile Include="Nodes\LocalSheetCellReferenceNode.cs" />
     <Compile Include="Nodes\SpreadyNode.cs" />
     <Compile Include="Nodes\StatementNode.cs" />
     <Compile Include="Nodes\WorksheetNameNode.cs" />
     <Compile Include="Nodes\WorksheetNode.cs" />
+    <Compile Include="Nodes\XNode.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Parser\ParseResult.cs" />
     <Compile Include="Parser\ParseStatus.cs" />

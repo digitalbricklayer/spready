@@ -1,5 +1,6 @@
-﻿using System.IO;
-using Irony.Interpreter.Ast;
+﻿using System;
+using System.IO;
+using System.Text;
 using SpreadsheetLight;
 using Spready.Nodes;
 
@@ -23,33 +24,88 @@ namespace Spready
                     // Add sheet contents
                     foreach (var expressionNode in worksheetNode.Statements)
                     {
-                        if (expressionNode is SimpleStatementNode)
+                        switch (expressionNode)
                         {
-                            var simpleStatementNode = (SimpleStatementNode) expressionNode;
-                            if (simpleStatementNode.CellReference.CellReference is LocalSheetCellReferenceNode)
-                            {
-                                var internalCellReference = (LocalSheetCellReferenceNode)simpleStatementNode.CellReference.CellReference;
-                                if (simpleStatementNode.CellValue.Value is CellNumberNode)
-                                {
-                                    var number = (CellNumberNode)simpleStatementNode.CellValue.Value;
-                                    newSpreadsheet.SetCellValue(internalCellReference.CellName, number.Value);
-                                }
-                                else if (simpleStatementNode.CellValue.Value is CellStringNode)
-                                {
-                                    var number = (CellStringNode)simpleStatementNode.CellValue.Value;
-                                    newSpreadsheet.SetCellValue(internalCellReference.CellName, number.Value);
-                                }
-                            }
-                        }
-                        else if (expressionNode is EqualsStatementNode)
-                        {
-                            var equalsStatementNode = (EqualsStatementNode) expressionNode;
+                            case SimpleStatementNode simpleStatementNode:
+                                ProcessSimpleStatement(newSpreadsheet, simpleStatementNode);
+                                break;
+
+                            case EqualsStatementNode equalsStatementNode:
+                                ProcessEqualsStatement(newSpreadsheet, equalsStatementNode);
+                                break;
+
+                            default:
+                                throw new NotImplementedException("Unknown statement type.");
                         }
                     }
                 }
                 newSpreadsheet.DeleteWorksheet(TemporaryWorksheetName);
                 newSpreadsheet.SaveAs(GetOutputFileFrom(inputFilename));
             }
+        }
+
+        private void ProcessEqualsStatement(SLDocument newSpreadsheet, EqualsStatementNode equalsStatementNode)
+        {
+            var assignTo = (CellReferenceNode)equalsStatementNode.AssignTo;
+            switch (assignTo.CellReference)
+            {
+                case LocalSheetCellReferenceNode internalCellReference:
+                    newSpreadsheet.SetCellValue(internalCellReference.CellName,
+                                                GenerateStringExpressionFrom(equalsStatementNode));
+                    break;
+            }
+        }
+
+        private static void ProcessSimpleStatement(SLDocument newSpreadsheet, SimpleStatementNode simpleStatementNode)
+        {
+            switch (simpleStatementNode.CellReference.CellReference)
+            {
+                case LocalSheetCellReferenceNode internalCellReference:
+                    switch (simpleStatementNode.CellValue.Value)
+                    {
+                        case CellNumberNode numberValue:
+                            newSpreadsheet.SetCellValue(internalCellReference.CellName, numberValue.Value);
+                            break;
+
+                        case CellStringNode stringValue:
+                            newSpreadsheet.SetCellValue(internalCellReference.CellName, stringValue.Value);
+                            break;
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException("Cell refernce not implemented.");
+            }
+        }
+
+        private string GenerateStringExpressionFrom(EqualsStatementNode equalsStatementNode)
+        {
+            var functionCall = (FunctionCallNode) equalsStatementNode.FunctionCall;
+            switch (functionCall.FunctionName)
+            {
+                case "SUM":
+                    return "=SUM(" + GenerateStringFunctionArgumentsFrom(equalsStatementNode.FunctionCallArguments) + ")";
+
+                default:
+                    throw new NotImplementedException("Function call not implemented.");
+            }
+        }
+
+        private string GenerateStringFunctionArgumentsFrom(FunctionCallArgumentNodeList functionCallArguments)
+        {
+            var functionArgsBuilder = new StringBuilder();
+            foreach (var argument in functionCallArguments.Arguments)
+            {
+                functionArgsBuilder.Append(GenerateCellReferenceTextFrom(argument.CellReference) + ",");
+            }
+
+            var x = functionArgsBuilder.ToString();
+            return x.TrimEnd(new[] { ',' });
+        }
+
+        private string GenerateCellReferenceTextFrom(XNode cellReferenceNode)
+        {
+            return cellReferenceNode.GetFullName();
         }
 
         private string GetOutputFileFrom(string inputFilename)

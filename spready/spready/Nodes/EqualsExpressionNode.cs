@@ -5,7 +5,7 @@ namespace Spready.Nodes
 {
     public class EqualsStatementNode : StatementNode
     {
-        public object FunctionCallArguments { get; set; }
+        public FunctionCallArgumentNodeList FunctionCallArguments { get; set; }
 
         public object FunctionCall { get; private set; }
 
@@ -16,7 +16,7 @@ namespace Spready.Nodes
             base.Init(context, treeNode);
             AssignTo = treeNode.ChildNodes[0].AstNode;
             FunctionCall = treeNode.ChildNodes[1].AstNode;
-            FunctionCallArguments = treeNode.ChildNodes[2].AstNode;
+            FunctionCallArguments = (FunctionCallArgumentNodeList) treeNode.ChildNodes[2].AstNode;
         }
     }
 }

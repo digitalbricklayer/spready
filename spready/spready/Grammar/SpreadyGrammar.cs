@@ -32,7 +32,7 @@ namespace Spready.Grammar
             var localSheetCellReference = new NonTerminal("internal sheet cell reference", typeof(LocalSheetCellReferenceNode));
             var infraSheetCellReference = new NonTerminal("infra sheet cell reference", typeof(InfraSheetCellReferenceNode));
             var functionCall = new NonTerminal("function call", typeof(FunctionCallNode));
-            var argumentList = new NonTerminal("argument list", typeof(ArgumentNodeList));
+            var argumentList = new NonTerminal("argument list", typeof(FunctionCallArgumentNodeList));
 
             // BNF rules
             cellValue.Rule = cellValueNumber | cellValueString;

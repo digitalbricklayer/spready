@@ -5,13 +5,13 @@ using Irony.Parsing;
 
 namespace Spready.Nodes
 {
-    public class ArgumentNodeList : AstNode
+    public class FunctionCallArgumentNodeList : AstNode
     {
-        public IList<object> Arguments { get; private set; }
+        public IList<CellReferenceNode> Arguments { get; private set; }
 
-        public ArgumentNodeList()
+        public FunctionCallArgumentNodeList()
         {
-            Arguments = new List<object>();
+            Arguments = new List<CellReferenceNode>();
         }
 
         public override void Init(AstContext context, ParseTreeNode treeNode)
@@ -19,7 +19,7 @@ namespace Spready.Nodes
             base.Init(context, treeNode);
             foreach (var childNode in treeNode.ChildNodes)
             {
-                Arguments.Add(childNode.AstNode);
+                Arguments.Add((CellReferenceNode) childNode.AstNode);
             }
         }
     }
