@@ -9,7 +9,7 @@ namespace Spready.Tests.Unit
     {
         private const string InputFilename = "MultipleWorksheets.spready";
         private const string OutputFilename = "MultipleWorksheets.xlsx";
-        private const string SourceCode = @"Sheet1 { A1 10, A2 20 } Sheet2 { A1=SUM(Sheet1!A1, Sheet1!A2) }";
+        private const string SourceCode = @"worksheet Sheet1 { A1 10, A2 20 } worksheet Sheet2 { A1=SUM(Sheet1!A1, Sheet1!A2) }";
         private string inputPath;
         private string outputPath;
 

@@ -12,6 +12,8 @@ namespace Spready.Grammar
             LanguageFlags = LanguageFlags.CreateAst |
                             LanguageFlags.NewLineBeforeEOF;
 
+            var WORKSHEET_DECL = ToTerm("worksheet");
+
             // Terminals
             var worksheetName = new RegexBasedTerminal("worksheet name", @"\b[A-Za-z0-9]\w*\b");
             worksheetName.AstConfig.NodeType = typeof (WorksheetNameNode);
@@ -49,7 +51,7 @@ namespace Spready.Grammar
             equalsStatement.Rule = cellReference + ToTerm("=") + functionCall + ToTerm("(") + argumentList + ToTerm(")");
             expression.Rule = simpleStatement | equalsStatement;
             expressionList.Rule = MakeStarRule(expressionList, ToTerm(","), expression);
-            worksheet.Rule = worksheetName + ToTerm("{") + expressionList + ToTerm("}");
+            worksheet.Rule = WORKSHEET_DECL + worksheetName + ToTerm("{") + expressionList + ToTerm("}");
             worksheetList.Rule = MakePlusRule(worksheetList, worksheet);
 
             // A spreadsheet is a list of worksheets...
@@ -59,6 +61,7 @@ namespace Spready.Grammar
             RegisterBracePair("{", "}");
             RegisterBracePair("(", ")");
             MarkPunctuation("{", "}", ",", "!", "=", "(", ")");
+            MarkPunctuation(WORKSHEET_DECL);
         }
     }
 }

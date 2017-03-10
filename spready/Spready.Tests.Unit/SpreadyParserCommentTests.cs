@@ -9,7 +9,7 @@ namespace Spready.Tests.Unit
     {
         private readonly string InputFilename = "Empty.spready";
         private readonly string OutputFilename = "Empty.xlsx";
-        private readonly string SourceCode = @"Sheet1 { /* This is a comment. */ }";
+        private readonly string SourceCode = @"worksheet Sheet1 { /* This is a comment. */ }";
         private string inputPath;
         private string outputPath;
 

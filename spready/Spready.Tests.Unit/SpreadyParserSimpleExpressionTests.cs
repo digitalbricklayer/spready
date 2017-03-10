@@ -9,7 +9,7 @@ namespace Spready.Tests.Unit
     {
         private const string InputFilename = "simples.spready";
         private const string OutputFilename = "simples.xlsx";
-        private const string SourceCode = @"Sheet1 { A1 10, A2 ""Jack"" }";
+        private const string SourceCode = @"worksheet Sheet1 { A1 10, A2 ""Jack"" }";
         private string inputPath;
         private string outputPath;
 
