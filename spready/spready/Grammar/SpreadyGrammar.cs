@@ -21,7 +21,7 @@ namespace Spready.Grammar
             cellName.AstConfig.NodeType = typeof (CellNameNode);
 
             // Non-termninals
-            var lineComment = new CommentTerminal("line comment", "--", "\n", "\r\n");
+            var lineComment = new CommentTerminal("line comment", "//", "\n", "\r\n");
             var blockComment = new CommentTerminal("block comment", "/*", "*/");
             NonGrammarTerminals.Add(lineComment);
             NonGrammarTerminals.Add(blockComment);
