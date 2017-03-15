@@ -1,0 +1,11 @@
+worksheet Summary {
+	A1=SUM(Backing!A1, Backing!A2)
+}
+
+worksheet Backing hidden {
+	/*
+	 * Where all of the lookup tables sit.
+	 */
+	A1 10,
+	A2 20
+}
