@@ -3,15 +3,28 @@ using System.IO;
 using System.Text;
 using SpreadsheetLight;
 using Spready.Nodes;
+using Spready.Parser;
+using System.Diagnostics;
 
 namespace Spready
 {
-    class SpreadsheetCompiler
+    public class SpreadsheetCompiler
     {
         private const string TemporaryWorksheetName = "sheet to be deleted";
 
-        internal void Compile(SpreadyNode theRootNode, string inputFilename)
+        public bool Compile(string inputFilename)
         {
+            // Parse the source code...
+            var spreadyParser = new SpreadyParser();
+            var parseResult = spreadyParser.Parse(inputFilename);
+            if (parseResult.Status != ParseStatus.Success)
+            {
+                Console.Error.WriteLine("Error: syntax error in input file.");
+                return false;
+            }
+
+            var theRootNode = parseResult.Root;
+
             // Create the spreadsheet
             using (var newSpreadsheet = new SLDocument())
             {
@@ -20,7 +33,14 @@ namespace Spready
                 newSpreadsheet.DeleteWorksheet("Sheet1");
                 foreach (var worksheetNode in theRootNode.WorksheetNodes)
                 {
-                    newSpreadsheet.AddWorksheet(worksheetNode.Name);
+                    var addStatus = newSpreadsheet.AddWorksheet(worksheetNode.Name);
+
+                    if (!addStatus)
+                    {
+                        Console.Error.WriteLine("Error: failed to create new worksheet {1}", worksheetNode.Name);
+                        return false;
+                    }
+
                     // Add sheet contents
                     foreach (var expressionNode in worksheetNode.Statements)
                     {
@@ -38,25 +58,54 @@ namespace Spready
                                 throw new NotImplementedException("Unknown statement type.");
                         }
                     }
+
+                    if (!worksheetNode.HiddenAttribute.IsVisible)
+                    {
+                        newSpreadsheet.HideWorksheet(worksheetNode.Name);
+                        Debug.Assert(newSpreadsheet.IsWorksheetHidden(worksheetNode.Name));
+                    }
                 }
                 newSpreadsheet.DeleteWorksheet(TemporaryWorksheetName);
-                newSpreadsheet.SaveAs(GetOutputFileFrom(inputFilename));
+                SelectActiveWorksheet(newSpreadsheet);
+                newSpreadsheet.SaveAs(GetOutputPathFrom(inputFilename));
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Select the first non-hidden worksheet.
+        /// </summary>
+        /// <param name="newSpreadsheet">Spreadsheet.</param>
+        private void SelectActiveWorksheet(SLDocument newSpreadsheet)
+        {
+            var allSheetNames = newSpreadsheet.GetSheetNames();
+            foreach (var sheetName in allSheetNames)
+            {
+                if (!newSpreadsheet.IsWorksheetHidden(sheetName))
+                {
+                    newSpreadsheet.SelectWorksheet(sheetName);
+                    break;
+                }
             }
         }
 
-        private void ProcessEqualsStatement(SLDocument newSpreadsheet, EqualsStatementNode equalsStatementNode)
+        private void ProcessEqualsStatement(SLDocument theSpreadsheet, EqualsStatementNode equalsStatementNode)
         {
             var assignTo = (CellReferenceNode)equalsStatementNode.AssignTo;
             switch (assignTo.CellReference)
             {
                 case LocalSheetCellReferenceNode internalCellReference:
-                    newSpreadsheet.SetCellValue(internalCellReference.CellName,
+                    theSpreadsheet.SetCellValue(internalCellReference.CellName,
                                                 GenerateStringExpressionFrom(equalsStatementNode));
                     break;
+
+                default:
+                    throw new NotImplementedException("Cell reference not implemented.");
             }
         }
 
-        private static void ProcessSimpleStatement(SLDocument newSpreadsheet, SimpleStatementNode simpleStatementNode)
+        private static void ProcessSimpleStatement(SLDocument theSpreadsheet, SimpleStatementNode simpleStatementNode)
         {
             switch (simpleStatementNode.CellReference.CellReference)
             {
@@ -64,17 +113,17 @@ namespace Spready
                     switch (simpleStatementNode.CellValue.Value)
                     {
                         case CellNumberNode numberValue:
-                            newSpreadsheet.SetCellValue(internalCellReference.CellName, numberValue.Value);
+                            theSpreadsheet.SetCellValue(internalCellReference.CellName, numberValue.Value);
                             break;
 
                         case CellStringNode stringValue:
-                            newSpreadsheet.SetCellValue(internalCellReference.CellName, stringValue.Value);
+                            theSpreadsheet.SetCellValue(internalCellReference.CellName, stringValue.Value);
                             break;
                     }
                     break;
 
                 default:
-                    throw new NotImplementedException("Cell refernce not implemented.");
+                    throw new NotImplementedException("Cell reference not implemented.");
             }
         }
 
@@ -108,9 +157,9 @@ namespace Spready
             return cellReferenceNode.GetFullName();
         }
 
-        private string GetOutputFileFrom(string inputFilename)
+        private string GetOutputPathFrom(string inputPath)
         {
-            return Path.GetFileNameWithoutExtension(inputFilename) + ".xlsx";
+            return Path.ChangeExtension(inputPath, ".xlsx");
         }
     }
 }

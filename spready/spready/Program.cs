@@ -49,12 +49,8 @@ namespace Spready
         {
             foreach (var inputFilename in compileSubOptions.Inputs)
             {
-                // Parse the source code...
-                var spreadyParser = new SpreadyParser();
-                var parseResult = spreadyParser.Parse(inputFilename);
-                if (parseResult.Status != ParseStatus.Success) return;
                 var compiler = new SpreadsheetCompiler();
-                compiler.Compile(parseResult.Root, inputFilename);
+                compiler.Compile(inputFilename);
             }
         }
     }

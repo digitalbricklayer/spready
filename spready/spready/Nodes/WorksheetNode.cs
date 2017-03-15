@@ -11,6 +11,7 @@ namespace Spready.Nodes
         public WorksheetNameNode WorksheetName { get; private set; }
         public IList<StatementNode> Statements { get; private set; }
         public ExpressionNodeList ExpressionList { get; private set; }
+        public HiddenAttributeNode HiddenAttribute { get; private set; }
 
         public WorksheetNode()
         {
@@ -21,7 +22,8 @@ namespace Spready.Nodes
         {
             base.Init(context, treeNode);
             WorksheetName = (WorksheetNameNode) treeNode.ChildNodes[0].AstNode;
-            ExpressionList = (ExpressionNodeList) treeNode.ChildNodes[1].AstNode;
+            HiddenAttribute = (HiddenAttributeNode) treeNode.ChildNodes[1].AstNode;
+            ExpressionList = (ExpressionNodeList) treeNode.ChildNodes[2].AstNode;
             foreach (var childNode in ExpressionList.Expressions)
             {
                 Statements.Add(childNode.InnerStatement);

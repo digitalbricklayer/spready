@@ -39,6 +39,7 @@ namespace Spready.Grammar
             var infraSheetCellReference = new NonTerminal("infra sheet cell reference", typeof(InfraSheetCellReferenceNode));
             var functionCall = new NonTerminal("function call", typeof(FunctionCallNode));
             var argumentList = new NonTerminal("argument list", typeof(FunctionCallArgumentNodeList));
+            var hiddenAttribute = new NonTerminal("hidden attribtue", typeof(HiddenAttributeNode));
 
             // BNF rules
             cellValue.Rule = cellValueNumber | cellValueString;
@@ -51,7 +52,8 @@ namespace Spready.Grammar
             equalsStatement.Rule = cellReference + ToTerm("=") + functionCall + ToTerm("(") + argumentList + ToTerm(")");
             expression.Rule = simpleStatement | equalsStatement;
             expressionList.Rule = MakeStarRule(expressionList, ToTerm(","), expression);
-            worksheet.Rule = WORKSHEET_DECL + worksheetName + ToTerm("{") + expressionList + ToTerm("}");
+            hiddenAttribute.Rule = "hidden" | Empty;
+            worksheet.Rule = WORKSHEET_DECL + worksheetName + hiddenAttribute + ToTerm("{") + expressionList + ToTerm("}");
             worksheetList.Rule = MakePlusRule(worksheetList, worksheet);
 
             // A spreadsheet is a list of worksheets...

@@ -73,6 +73,7 @@
     <Compile Include="Nodes\ExpressionNode.cs" />
     <Compile Include="Nodes\ExpressionNodeList.cs" />
     <Compile Include="Nodes\FunctionCallNode.cs" />
+    <Compile Include="Nodes\HiddenAttributeNode.cs" />
     <Compile Include="Nodes\SimpleExpressionNode.cs" />
     <Compile Include="Nodes\InfraSheetCellReferenceNode.cs" />
     <Compile Include="Nodes\LocalSheetCellReferenceNode.cs" />
