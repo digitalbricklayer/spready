@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using Spready.Parser;
 
 namespace Spready
 {
     class Program
     {
         private const string DefaultSpreadsheetFilename = "Spready1.spready";
-        private readonly string DefaultSpreadsheetSourceCode = @"Sheet1 {" + Environment.NewLine + @"}";
+        private readonly string DefaultSpreadsheetSourceCode = @"worksheet Sheet1 {" + Environment.NewLine + @"}";
 
         private static void Main(string[] args)
         {
@@ -23,16 +22,18 @@ namespace Spready
                 Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
             }
 
-            switch (invokedVerb)
+            switch (invokedVerbInstance)
             {
-                case "new":
-                    var newSubOptions = (NewSubOptions) invokedVerbInstance;
+                case NewSubOptions newSubOptions:
                     new Program().CreateNewSpreadsheet(newSubOptions);
                     break;
 
-                case "compile":
-                    var compileSubOptions = (CompileSubOptions) invokedVerbInstance;
+                case CompileSubOptions compileSubOptions:
                     new Program().CompileSpreadsheet(compileSubOptions);
+                    break;
+
+                default:
+                    Console.Error.WriteLine("Error: unknown command.");
                     break;
             }
         }
@@ -41,8 +42,32 @@ namespace Spready
         {
             if (newSubOptions.IsDefaultOutput)
             {
-                File.WriteAllText(DefaultSpreadsheetFilename, DefaultSpreadsheetSourceCode);
+                WriteDefaultSpreadsheetSources(DefaultSpreadsheetFilename);
             }
+            else
+            {
+                foreach (var outputFilename in newSubOptions.Outputs)
+                {
+                    WriteDefaultSpreadsheetSources(CreateFullSourceFilenameFrom(outputFilename));
+                }
+            }
+        }
+
+        private string CreateFullSourceFilenameFrom(string outputFilename)
+        {
+            if (Path.GetExtension(outputFilename) == string.Empty)
+            {
+                return outputFilename + ".spready";
+            }
+            else
+            {
+                return outputFilename;
+            }
+        }
+
+        private void WriteDefaultSpreadsheetSources(string filename)
+        {
+            File.WriteAllText(filename, DefaultSpreadsheetSourceCode);
         }
 
         private void CompileSpreadsheet(CompileSubOptions compileSubOptions)

@@ -5,7 +5,7 @@ using SpreadsheetLight;
 namespace Spready.Tests.Unit
 {
     [TestFixture]
-    public class SpreadyParserHiddenWorksheetTests
+    public class SpreadyCompilerHiddenWorksheetTests
     {
         private readonly string InputFilename = "HiddenWorksheet.spready";
         private readonly string OutputFilename = "HiddenWorksheet.xlsx";
@@ -29,7 +29,7 @@ namespace Spready.Tests.Unit
         }
 
         [Test]
-        public void ParseSourceFileReturnsSuccess()
+        public void CompileSourceFileWorksheetIsHidden()
         {
             var compiler = new SpreadsheetCompiler();
             compiler.Compile(inputPath);
