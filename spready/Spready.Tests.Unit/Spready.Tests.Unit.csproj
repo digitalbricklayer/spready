@@ -48,7 +48,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SpreadyParserHiddenWorksheetTests.cs" />
+    <Compile Include="SpreadyCompilerWithHiddenWorksheetShould.cs" />
+    <Compile Include="SpreadyParserWithTestsShould.cs" />
     <Compile Include="SpreadyParserCommentTests.cs" />
     <Compile Include="SpreadyParserEqualsExpressionTests.cs" />
     <Compile Include="SpreadyParserMultiWorksheetTests.cs" />
@@ -64,6 +65,9 @@
       <Project>{7ef8c3eb-4069-418b-b548-d28c14c7cfb7}</Project>
       <Name>Spready</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\Tests.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

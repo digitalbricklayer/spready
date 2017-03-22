@@ -62,12 +62,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompileSubOptions.cs" />
+    <Compile Include="Nodes\TestStatementNode.cs" />
+    <Compile Include="Nodes\CellExpressionNode.cs" />
+    <Compile Include="Nodes\WorksheetExpressionNode.cs" />
+    <Compile Include="Nodes\ComparisonOperatorNode.cs" />
+    <Compile Include="Nodes\CellStringNode.cs" />
+    <Compile Include="Nodes\RootItemBase.cs" />
+    <Compile Include="Nodes\RootItemNode.cs" />
+    <Compile Include="Nodes\TestExpressionNode.cs" />
+    <Compile Include="Nodes\TestNodeList.cs" />
+    <Compile Include="Nodes\TestGroupNode.cs" />
+    <Compile Include="Nodes\TestNode.cs" />
     <Compile Include="NewSubOptions.cs" />
     <Compile Include="Nodes\ArgumentListNode.cs" />
     <Compile Include="Nodes\CellNameNode.cs" />
     <Compile Include="Nodes\CellNumberNode.cs" />
     <Compile Include="Nodes\CellReferenceNode.cs" />
-    <Compile Include="Nodes\CellStringNode.cs" />
+    <Compile Include="Nodes\TestNameNode.cs" />
     <Compile Include="Nodes\CellValueNode.cs" />
     <Compile Include="Nodes\EqualsExpressionNode.cs" />
     <Compile Include="Nodes\ExpressionNode.cs" />

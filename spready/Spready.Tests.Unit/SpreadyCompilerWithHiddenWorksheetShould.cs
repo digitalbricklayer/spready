@@ -5,7 +5,7 @@ using SpreadsheetLight;
 namespace Spready.Tests.Unit
 {
     [TestFixture]
-    public class SpreadyCompilerHiddenWorksheetTests
+    public class SpreadyCompilerWithHiddenWorksheetShould
     {
         private readonly string InputFilename = "HiddenWorksheet.spready";
         private readonly string OutputFilename = "HiddenWorksheet.xlsx";
