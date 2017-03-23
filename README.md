@@ -5,7 +5,9 @@ A spreadsheet you can put into a version control system and diff the same as any
 ```
 spready init "my spreadsheet"
 ```
-<edit the spreadsheet in a text editor>
+
+Edit the spreadsheet in a suitable text editor.
+
 ```
 spready compile "my spreadsheet"
 ```
