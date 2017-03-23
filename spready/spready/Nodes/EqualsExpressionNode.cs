@@ -15,8 +15,8 @@ namespace Spready.Nodes
         {
             base.Init(context, treeNode);
             AssignTo = treeNode.ChildNodes[0].AstNode;
-            FunctionCall = treeNode.ChildNodes[1].AstNode;
-            FunctionCallArguments = (FunctionCallArgumentNodeList) treeNode.ChildNodes[2].AstNode;
+            FunctionCall = treeNode.ChildNodes[2].AstNode;
+            FunctionCallArguments = (FunctionCallArgumentNodeList) treeNode.ChildNodes[3].AstNode;
         }
     }
 }

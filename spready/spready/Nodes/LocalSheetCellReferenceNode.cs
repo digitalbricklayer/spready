@@ -3,11 +3,11 @@ using Irony.Parsing;
 
 namespace Spready.Nodes
 {
-    public class LocalSheetCellReferenceNode : XNode
+    public class LocalSheetCellReferenceNode : CellReferenceBaseNode
     {
         public string CellName { get; private set; }
 
-        public override string GetFullName()
+        public override string GetFullReference()
         {
             return CellName;
         }

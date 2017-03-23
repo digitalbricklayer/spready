@@ -152,9 +152,9 @@ namespace Spready
             return x.TrimEnd(new[] { ',' });
         }
 
-        private string GenerateCellReferenceTextFrom(XNode cellReferenceNode)
+        private string GenerateCellReferenceTextFrom(CellReferenceBaseNode cellReferenceNode)
         {
-            return cellReferenceNode.GetFullName();
+            return cellReferenceNode.GetFullReference();
         }
 
         private string GetOutputPathFrom(string inputPath)

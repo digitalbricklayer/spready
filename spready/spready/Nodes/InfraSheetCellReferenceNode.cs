@@ -3,7 +3,7 @@ using Irony.Parsing;
 
 namespace Spready.Nodes
 {
-    public class InfraSheetCellReferenceNode : XNode
+    public class InfraSheetCellReferenceNode : CellReferenceBaseNode
     {
         public string CellName { get; private set; }
         public string WorksheetName { get; private set; }
@@ -21,7 +21,7 @@ namespace Spready.Nodes
             CellName = treeNode.ChildNodes[1].FindTokenAndGetText();
         }
 
-        public override string GetFullName()
+        public override string GetFullReference()
         {
             return WorksheetName + "!" + CellName;
         }

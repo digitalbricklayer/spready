@@ -6,12 +6,12 @@ namespace Spready.Nodes
 {
     public class CellReferenceNode : AstNode
     {
-        public XNode CellReference { get; private set; }
+        public CellReferenceBaseNode CellReference { get; private set; }
 
         public override void Init(AstContext context, ParseTreeNode treeNode)
         {
             base.Init(context, treeNode);
-            CellReference = (XNode) treeNode.ChildNodes[0].AstNode;
+            CellReference = (CellReferenceBaseNode) treeNode.ChildNodes[0].AstNode;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Spready.Grammar
             var testList = new NonTerminal("test list", typeof(TestNodeList));
             var test = new NonTerminal("test", typeof(TestNode));
             var testExpression = new NonTerminal("test expression", typeof(TestExpressionNode));
-            var comparisonOperator = new NonTerminal("comparison operator", typeof(ComparisonOperatorNode));
+            var comparisonOperator = new NonTerminal("comparison operator");
             var worksheetExpression = new NonTerminal("worksheet expression", typeof(WorksheetExpressionNode));
             var cellExpression = new NonTerminal("cell expression", typeof(CellExpressionNode));
             var testStatement = new NonTerminal("test statement", typeof(TestStatementNode));
@@ -65,7 +65,7 @@ namespace Spready.Grammar
             optionalHiddenAttribute.Rule = "hidden" | Empty;
             worksheet.Rule = WORKSHEET_DECL + worksheetName + optionalHiddenAttribute + ToTerm("{") + expressionList + ToTerm("}");
             rootList.Rule = MakePlusRule(rootList, worksheet);
-            comparisonOperator.Rule = ToTerm("=") | ToTerm("<>");
+            comparisonOperator.Rule = ToTerm("=", "equals") | ToTerm("<>", "not equals");
             rootItem.Rule = worksheet | testGroup;
             rootList.Rule = MakePlusRule(rootList, rootItem);
             worksheetExpression.Rule = worksheetName + "is" + "hidden";
@@ -79,10 +79,11 @@ namespace Spready.Grammar
             // A spreadsheet is a list of worksheet declarations and test groups...
             Root = rootList;
 
-            // Punctuation  and transient terms
+            // Punctuation and transient terms
             RegisterBracePair("{", "}");
             RegisterBracePair("(", ")");
-            MarkPunctuation("{", "}", ",", "!", "=", "(", ")");
+            MarkTransient(rootItem, comparisonOperator);
+            MarkPunctuation("{", "}", ",", "!", "(", ")");
             MarkPunctuation(WORKSHEET_DECL);
         }
     }

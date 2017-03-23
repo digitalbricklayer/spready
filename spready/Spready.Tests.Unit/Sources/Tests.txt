@@ -1,4 +1,8 @@
-﻿worksheet Summary {
+﻿/*
+ * A spreadsheet for testing tests.
+ */
+
+worksheet Summary {
 	A1=SUM(Backing!A1, Backing!A2)
 }
 
@@ -11,8 +15,8 @@ worksheet Backing hidden {
 }
 
 group worksheet Backing {
-	test "Backing is not visible" => Backing is hidden,
-	test "A1 should not be 20" => A1 = 20
+	test "Backing is hidden" => Backing is hidden,
+	test "A1 should be 20" => A1 = 20
 }
 
 group worksheet Summary {
