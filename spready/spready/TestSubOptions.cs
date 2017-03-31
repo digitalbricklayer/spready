@@ -1,14 +1,14 @@
 ﻿namespace Spready
 {
-    public class CompileSubOptions
+    public class TestSubOptions
     {
-        public CompileSubOptions()
+        public TestSubOptions()
         {
             Input = string.Empty;
         }
 
         /// <summary>
-        /// Gets or sets the input filename.
+        /// Gets or sets the file to compile and test.
         /// </summary>
         public string Input { get; set; }
     }

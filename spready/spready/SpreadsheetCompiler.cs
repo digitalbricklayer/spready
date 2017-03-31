@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using SpreadsheetLight;
 using Spready.Nodes;
-using Spready.Parser;
 using System.Diagnostics;
 
 namespace Spready
@@ -12,25 +11,16 @@ namespace Spready
     {
         private const string TemporaryWorksheetName = "sheet to be deleted";
 
-        public bool Compile(string inputFilename)
+        public CompileResult Compile(SpreadsheetDetails spreadsheetDetails)
         {
-            // Parse the source code...
-            var spreadyParser = new SpreadyParser();
-            var parseResult = spreadyParser.Parse(inputFilename);
-            if (parseResult.Status != ParseStatus.Success)
-            {
-                Console.Error.WriteLine("Error: syntax error in input file.");
-                return false;
-            }
-
-            var theRootNode = parseResult.Root;
+            var theRootNode = spreadsheetDetails.RootNode;
 
             // Create the spreadsheet
             using (var newSpreadsheet = new SLDocument())
             {
                 // Remove the default worksheet
                 newSpreadsheet.AddWorksheet(TemporaryWorksheetName);
-                newSpreadsheet.DeleteWorksheet("Sheet1");
+                newSpreadsheet.DeleteWorksheet(SLDocument.DefaultFirstSheetName);
                 foreach (var worksheetNode in theRootNode.WorksheetNodes)
                 {
                     var addStatus = newSpreadsheet.AddWorksheet(worksheetNode.Name);
@@ -38,7 +28,7 @@ namespace Spready
                     if (!addStatus)
                     {
                         Console.Error.WriteLine("Error: failed to create new worksheet {1}", worksheetNode.Name);
-                        return false;
+                        return CompileResult.CreateFailResult();
                     }
 
                     // Add sheet contents
@@ -67,10 +57,10 @@ namespace Spready
                 }
                 newSpreadsheet.DeleteWorksheet(TemporaryWorksheetName);
                 SelectActiveWorksheet(newSpreadsheet);
-                newSpreadsheet.SaveAs(GetOutputPathFrom(inputFilename));
+                newSpreadsheet.SaveAs(GetOutputPathFrom(spreadsheetDetails.InputFilename));
             }
 
-            return true;
+            return CompileResult.CreateSuccessfulResult(GetOutputPathFrom(spreadsheetDetails.InputFilename));
         }
 
         /// <summary>

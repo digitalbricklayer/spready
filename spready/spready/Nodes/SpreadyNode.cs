@@ -2,6 +2,7 @@
 using Irony.Ast;
 using Irony.Interpreter.Ast;
 using Irony.Parsing;
+using System;
 
 namespace Spready.Nodes
 {
@@ -34,6 +35,13 @@ namespace Spready.Nodes
                     case WorksheetNode worksheetNode:
                         WorksheetNodes.Add(worksheetNode);
                         break;
+
+                    case TestGroupNode testGroupNode:
+                        TestGroupNodes.Add(testGroupNode);
+                        break;
+
+                    default:
+                        throw new NotImplementedException("Unknown spready child node.");
                 }
             }
         }

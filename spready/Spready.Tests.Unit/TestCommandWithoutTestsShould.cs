@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using SpreadsheetLight;
+using Spready.Commands;
 
 namespace Spready.Tests.Unit
 {
     [TestFixture]
-    public class SpreadyCompilerWithHiddenWorksheetShould
+    public class TestCommandWithoutTestsShould
     {
         private readonly string InputFilename = "HiddenWorksheet.spready";
         private readonly string OutputFilename = "HiddenWorksheet.xlsx";
@@ -29,15 +29,11 @@ namespace Spready.Tests.Unit
         }
 
         [Test]
-        public void CompileSourceFileWorksheetIsHidden()
+        public void ExitCodeReturnsSuccess()
         {
-            var compiler = new SpreadsheetCompiler();
-            compiler.Compile(inputPath);
-            using (var spreadsheet = new SLDocument(outputPath))
-            {
-                var isBackingWorksheetHidden = spreadsheet.IsWorksheetHidden("Backing");
-                Assert.That(isBackingWorksheetHidden, Is.True);
-            }
+            var testCommand = new TestCommand();
+            var exitCode = testCommand.Run(new TestSubOptions { Input = inputPath });
+            Assert.That(exitCode, Is.EqualTo(0));
         }
     }
 }
