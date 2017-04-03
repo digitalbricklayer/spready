@@ -61,6 +61,7 @@
     <Compile Include="SpreadyParserSimpleExpressionTests.cs" />
     <Compile Include="SpreadyParserEmptySheetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCommandWithHiddenWorksheetTestShould.cs" />
     <Compile Include="TestCommandWithoutTestsShould.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Sources\Comment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\HiddenWorksheetWithTest.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

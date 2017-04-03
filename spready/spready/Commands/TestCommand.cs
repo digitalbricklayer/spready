@@ -1,5 +1,4 @@
-﻿using Spready.Parser;
-using System;
+﻿using System;
 
 namespace Spready.Commands
 {
@@ -10,6 +9,11 @@ namespace Spready.Commands
             var testOptions = (TestSubOptions) options;
             var testRunner = new SpreadsheetTestRunner();
             var result = testRunner.Run(testOptions);
+
+            if (result.Status == TestRunStatus.BadSyntax)
+            {
+                return (int)ExitCode.BadSyntax;
+            }
 
             PrintReport(result);
 

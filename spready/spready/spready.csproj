@@ -68,7 +68,7 @@
     <Compile Include="CompileResult.cs" />
     <Compile Include="TestGroupResult.cs" />
     <Compile Include="TestResult.cs" />
-    <Compile Include="TestRunResults.cs" />
+    <Compile Include="TestRunResult.cs" />
     <Compile Include="TestRunStatus.cs" />
     <Compile Include="TestSubOptions.cs" />
     <Compile Include="CompileSubOptions.cs" />
