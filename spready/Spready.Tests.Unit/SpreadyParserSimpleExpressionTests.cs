@@ -1,38 +1,18 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Spready.Parser;
 
 namespace Spready.Tests.Unit
 {
     [TestFixture]
-    public class SpreadyParserSimpleExpressionTests
+    public class SpreadyParserSimpleExpressionTests : SpreadyFixture
     {
-        private const string InputFilename = "simples.spready";
-        private const string OutputFilename = "simples.xlsx";
-        private const string SourceCode = @"worksheet Sheet1 { A1 10, A2 ""Jack"" }";
-        private string inputPath;
-        private string outputPath;
-
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            inputPath = Path.Combine(Path.GetTempPath(), InputFilename);
-            File.WriteAllText(inputPath, SourceCode);
-            outputPath = Path.Combine(Path.GetTempPath(), OutputFilename);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeCleanup()
-        {
-            File.Delete(inputPath);
-            File.Delete(outputPath);
-        }
+        protected override string InputFilename { get { return "Simple.txt"; } }
 
         [Test]
         public void ParseSimpleSourceFileReturnsSuccess()
         {
             var parser = new SpreadyParser();
-            var result = parser.Parse(inputPath);
+            var result = parser.Parse(InputPath);
             Assert.That(result.Status, Is.EqualTo(ParseStatus.Success));
         }
     }

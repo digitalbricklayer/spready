@@ -75,6 +75,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Sources\Tests.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\HiddenWorksheet.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\Simple.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\MultipleWorksheets.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\Equals.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\Empty.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sources\Comment.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

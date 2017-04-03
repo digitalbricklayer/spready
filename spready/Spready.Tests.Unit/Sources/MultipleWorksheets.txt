@@ -1,0 +1,1 @@
+﻿worksheet Sheet1 { A1 10, A2 20 } worksheet Sheet2 { A1=SUM(Sheet1!A1, Sheet1!A2) }

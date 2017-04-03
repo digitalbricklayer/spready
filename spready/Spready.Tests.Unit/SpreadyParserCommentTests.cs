@@ -1,38 +1,18 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Spready.Parser;
 
 namespace Spready.Tests.Unit
 {
     [TestFixture]
-    public class SpreadyParserCommentTests
+    public class SpreadyParserCommentTests : SpreadyFixture
     {
-        private readonly string InputFilename = "Empty.spready";
-        private readonly string OutputFilename = "Empty.xlsx";
-        private readonly string SourceCode = @"worksheet Sheet1 { /* This is a comment. */ }";
-        private string inputPath;
-        private string outputPath;
-
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            inputPath = Path.Combine(Path.GetTempPath(), InputFilename);
-            File.WriteAllText(inputPath, SourceCode);
-            outputPath = Path.Combine(Path.GetTempPath(), OutputFilename);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeCleanup()
-        {
-            File.Delete(inputPath);
-            File.Delete(outputPath);
-        }
+        protected override string InputFilename { get { return "Comment.txt"; } }
 
         [Test]
         public void ParseCommentSourceFileReturnsSuccess()
         {
             var parser = new SpreadyParser();
-            var result = parser.Parse(inputPath);
+            var result = parser.Parse(InputPath);
             Assert.That(result.Status, Is.EqualTo(ParseStatus.Success));
         }
     }

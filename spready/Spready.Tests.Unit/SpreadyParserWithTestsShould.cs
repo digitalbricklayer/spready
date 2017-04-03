@@ -7,28 +7,13 @@ namespace Spready.Tests.Unit
     [TestFixture]
     public class SpreadyParserWithTestsShould : SpreadyFixture
     {
-        private readonly string InputFilename = "Tests.txt";
-        private string inputPath;
-        private string outputPath;
-
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            (inputPath, outputPath) = WriteSourcesFrom("Spready.Tests.Unit.Sources.Tests.txt", InputFilename);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeCleanup()
-        {
-            File.Delete(inputPath);
-            File.Delete(outputPath);
-        }
+        protected override string InputFilename { get { return "Tests.txt"; } }
 
         [Test]
         public void ParseFileReturnsSuccess()
         {
             var parser = new SpreadyParser();
-            var result = parser.Parse(inputPath);
+            var result = parser.Parse(InputPath);
             Assert.That(result.Status, Is.EqualTo(ParseStatus.Success));
         }
     }

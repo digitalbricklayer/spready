@@ -1,32 +1,18 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SpreadsheetLight;
 using Spready.Commands;
 
 namespace Spready.Tests.Unit
 {
     [TestFixture]
-    public class CompileCommandWithHiddenWorksheetShould
+    public class CompileCommandWithHiddenWorksheetShould : SpreadyFixture
     {
-        private readonly string InputFilename = "HiddenWorksheet.spready";
-        private readonly string OutputFilename = "HiddenWorksheet.xlsx";
-        private readonly string SourceCode = @"worksheet Summary { A1=SUM(Backing!A1, Backing!A2) } worksheet Backing hidden { 	/* Hidden worksheet. */ A1 10, A2 20 }";
-        private string inputPath;
-        private string outputPath;
-
-        [OneTimeSetUp]
-        public void OneTimeSetup()
+        protected override string InputFilename
         {
-            inputPath = Path.Combine(Path.GetTempPath(), InputFilename);
-            File.WriteAllText(inputPath, SourceCode);
-            outputPath = Path.Combine(Path.GetTempPath(), OutputFilename);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeCleanup()
-        {
-            File.Delete(inputPath);
-            File.Delete(outputPath);
+            get
+            {
+                return "HiddenWorksheet.txt";
+            }
         }
 
         [Test]
@@ -34,7 +20,7 @@ namespace Spready.Tests.Unit
         {
             var compileCommand = new CompileCommand();
             compileCommand.Run(CreateCompileSubOptions());
-            using (var spreadsheet = new SLDocument(outputPath))
+            using (var spreadsheet = new SLDocument(OutputPath))
             {
                 var isBackingWorksheetHidden = spreadsheet.IsWorksheetHidden("Backing");
                 Assert.That(isBackingWorksheetHidden, Is.True);
@@ -51,7 +37,7 @@ namespace Spready.Tests.Unit
 
         private CompileSubOptions CreateCompileSubOptions()
         {
-            return new CompileSubOptions { Input = inputPath };
+            return new CompileSubOptions { Input = InputPath };
         }
     }
 }
