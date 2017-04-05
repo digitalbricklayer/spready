@@ -2,15 +2,15 @@
 using NUnit.Framework;
 using Spready.Parser;
 
-namespace Spready.Tests.Unit
+namespace Spready.Tests.Unit.Parser
 {
     [TestFixture]
-    public class SpreadyParserEmptySheetTests : SpreadyFixture
+    public class SpreadyParserEqualsExpressionTests : SpreadyFixture
     {
-        protected override string InputFilename { get { return "Empty.txt"; } }
+        protected override string InputFilename { get { return "Equals.txt"; } }
 
         [Test]
-        public void ParseEmptySheetSourceFileReturnsSuccess()
+        public void ParseEqualsSourceFileReturnsSuccess()
         {
             var parser = new SpreadyParser();
             var result = parser.Parse(InputPath);

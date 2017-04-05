@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Spready.Commands;
 
-namespace Spready.Tests.Unit
+namespace Spready.Tests.Unit.Commands
 {
     [TestFixture]
     public class TestCommandWithoutTestsShould : SpreadyFixture

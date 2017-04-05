@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Spready.Parser;
 
-namespace Spready.Tests.Unit
+namespace Spready.Tests.Unit.Parser
 {
     [TestFixture]
     public class SpreadyParserSimpleExpressionTests : SpreadyFixture

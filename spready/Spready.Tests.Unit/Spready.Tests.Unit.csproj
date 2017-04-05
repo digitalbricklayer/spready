@@ -54,15 +54,15 @@
     <Compile Include="NewCommandShould.cs" />
     <Compile Include="CompileCommandWithHiddenWorksheetShould.cs" />
     <Compile Include="SpreadyFixture.cs" />
-    <Compile Include="SpreadyParserWithTestsShould.cs" />
-    <Compile Include="SpreadyParserCommentTests.cs" />
-    <Compile Include="SpreadyParserEqualsExpressionTests.cs" />
-    <Compile Include="SpreadyParserMultiWorksheetTests.cs" />
-    <Compile Include="SpreadyParserSimpleExpressionTests.cs" />
-    <Compile Include="SpreadyParserEmptySheetTests.cs" />
+    <Compile Include="Parser\SpreadyParserWithTestsShould.cs" />
+    <Compile Include="Parser\SpreadyParserCommentTests.cs" />
+    <Compile Include="Parser\SpreadyParserEqualsExpressionTests.cs" />
+    <Compile Include="Parser\SpreadyParserMultiWorksheetTests.cs" />
+    <Compile Include="Parser\SpreadyParserSimpleExpressionTests.cs" />
+    <Compile Include="Parser\SpreadyParserEmptySheetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCommandWithHiddenWorksheetTestShould.cs" />
-    <Compile Include="TestCommandWithoutTestsShould.cs" />
+    <Compile Include="Commands\TestCommandWithHiddenWorksheetTestShould.cs" />
+    <Compile Include="Commands\TestCommandWithoutTestsShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -95,7 +95,7 @@
     <EmbeddedResource Include="Sources\Comment.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sources\HiddenWorksheetWithTest.txt" />
+    <EmbeddedResource Include="Sources\HiddenWorksheetWithTests.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,6 +3,7 @@ using Spready.Parser;
 using System;
 using System.Collections.Generic;
 using Spready.Nodes;
+using System.Diagnostics;
 
 namespace Spready
 {
@@ -54,10 +55,14 @@ namespace Spready
         {
             var accumulatedTestResults = new List<TestResult>();
 
-            this.spreadsheetUnderTest.SelectWorksheet(testGroupNode.WorksheetName);
+            var selectStatus = this.spreadsheetUnderTest.SelectWorksheet(testGroupNode.WorksheetName);
+
+            Debug.Assert(selectStatus);
+
             foreach (var testNode in testGroupNode.Tests.Tests)
             {
                 var testResult = ExecuteTest(testNode);
+                accumulatedTestResults.Add(testResult);
             }
 
             return new TestGroupResult(accumulatedTestResults);
@@ -87,13 +92,47 @@ namespace Spready
                     return this.spreadsheetUnderTest.IsWorksheetHidden(worksheetExpression.WorksheetName.Name);
 
                 case CellExpressionNode cellExpressionNode:
-                    break;
+                    return ExecuteCellExpression(cellExpressionNode);
 
                 default:
                     throw new NotImplementedException("Unknown test expression.");
             }
+        }
 
-            return false;
+        private bool ExecuteCellExpression(CellExpressionNode cellExpressionNode)
+        {
+            var actualCellValue = this.spreadsheetUnderTest.GetCellValueAsInt32(cellExpressionNode.CellReference.GetFullReference());
+            var expectedCellValue = GetCellValueFrom(cellExpressionNode.CellValue);
+            switch (cellExpressionNode.Operator)
+            {
+                case "=":
+                    if (actualCellValue == expectedCellValue)
+                        return true;
+                    return false;
+
+                case "<>":
+                    if (actualCellValue != expectedCellValue)
+                        return true;
+                    return false;
+
+                default:
+                    throw new NotImplementedException("Unknow operator.");
+            }
+        }
+
+        private int GetCellValueFrom(CellValueNode cellValue)
+        {
+            switch (cellValue.Value)
+            {
+                case CellNumberNode aNumber:
+                    return aNumber.Value;
+
+                case CellStringNode aString:
+                    return Convert.ToInt32(aString.Value);
+
+                default:
+                    throw new NotImplementedException("Unknown cell value type.");
+            }
         }
     }
 }

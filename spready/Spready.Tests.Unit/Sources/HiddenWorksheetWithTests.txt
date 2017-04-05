@@ -1,0 +1,24 @@
+﻿worksheet Summary {
+	A1=SUM(Backing!A1, Backing!A2)
+}
+
+worksheet Backing hidden {
+	/* 
+	 * Hidden worksheet.
+	 */
+	 A1 10,
+	 A2 20
+}
+
+group worksheet Backing {
+	test "Backing is not visible" => worksheet is hidden,
+	test "A1 should not be 20" => A1 <> 20
+}
+
+group worksheet Summary {
+	/* 
+	 * Exclude this test for now... the SpreadsheetLight library does not have 
+	 * a calculation engine so consequently any formulae will not be evaluated.
+	 */
+	//test "A1 should be 30" => A1 = 30
+}

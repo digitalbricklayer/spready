@@ -17,6 +17,8 @@ namespace Spready.Commands
 
             PrintReport(result);
 
+            if (result.Status == TestRunStatus.Fail)
+                return (int)ExitCode.Fail;
             return (int)ExitCode.Success;
         }
 

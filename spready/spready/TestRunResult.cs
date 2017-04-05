@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Spready
 {
@@ -10,6 +12,7 @@ namespace Spready
         private TestRunResult(IReadOnlyCollection<TestGroupResult> accumulatedTestResults)
         {
             Results = new List<TestGroupResult>(accumulatedTestResults);
+            Status = GetStatusFrom(accumulatedTestResults);
         }
 
         private TestRunResult(TestRunStatus runStatus)
@@ -61,6 +64,14 @@ namespace Spready
         public static TestRunResult CreateFromTestResults(IReadOnlyCollection<TestGroupResult> accumulatedTestResults)
         {
             return new TestRunResult(accumulatedTestResults);
+        }
+
+        private TestRunStatus GetStatusFrom(IReadOnlyCollection<TestGroupResult> accumulatedTestResults)
+        {
+            if (accumulatedTestResults.Any(result => result.GetFailedTotalTests() > 0))
+                return TestRunStatus.Fail;
+
+            return TestRunStatus.Success;
         }
     }
 }

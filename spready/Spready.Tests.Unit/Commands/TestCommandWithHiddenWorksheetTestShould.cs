@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
 using Spready.Commands;
 
-namespace Spready.Tests.Unit
+namespace Spready.Tests.Unit.Commands
 {
     [TestFixture]
     public class TestCommandWithHiddenWorksheetTestShould : SpreadyFixture
     {
-        protected override string InputFilename { get { return "HiddenWorksheetWithTest.txt"; } }
+        protected override string InputFilename { get { return "HiddenWorksheetWithTests.txt"; } }
 
         [Test]
         public void ExitCodeReturnsSuccess()

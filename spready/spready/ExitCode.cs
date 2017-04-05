@@ -17,6 +17,11 @@
         /// <summary>
         /// Invalid command line arguments.
         /// </summary>
-        BadArguments = 3
+        BadArguments = 3,
+        
+        /// <summary>
+        /// One or more tests failed.
+        /// </summary>
+        Fail
     }
 }
