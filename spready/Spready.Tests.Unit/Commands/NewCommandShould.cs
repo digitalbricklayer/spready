@@ -1,9 +1,9 @@
 ﻿using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using Spready.Commands;
-using System.Reflection;
 
-namespace Spready.Tests.Unit
+namespace Spready.Tests.Unit.Commands
 {
     [TestFixture]
     public class NewCommandShould

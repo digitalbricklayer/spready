@@ -2,7 +2,7 @@
 using SpreadsheetLight;
 using Spready.Commands;
 
-namespace Spready.Tests.Unit
+namespace Spready.Tests.Unit.Commands
 {
     [TestFixture]
     public class CompileCommandWithHiddenWorksheetShould : SpreadyFixture

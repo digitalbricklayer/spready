@@ -8,11 +8,9 @@ namespace Spready
         private static int Main(string[] args)
         {
             var options = new Options();
-            string invokedVerb = string.Empty;
             object invokedVerbInstance = null;
             if (!CommandLine.Parser.Default.ParseArguments(args, options, (verb, subOptions) =>
             {
-                invokedVerb = verb;
                 invokedVerbInstance = subOptions;
             }))
             {
@@ -27,11 +25,14 @@ namespace Spready
         {
             switch (invokedVerbInstance)
             {
-                case NewSubOptions newSubOptions:
+                case NewSubOptions _:
                     return new NewCommand();
 
-                case CompileSubOptions compileSubOptions:
+                case CompileSubOptions _:
                     return new CompileCommand();
+
+                case CalculateSubOptions _:
+                    return new CalculateCommand();
 
                 default:
                     throw new NotImplementedException("Error: unknown command.");

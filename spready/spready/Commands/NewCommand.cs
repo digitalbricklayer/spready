@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 namespace Spready.Commands
@@ -9,7 +8,7 @@ namespace Spready.Commands
     /// </summary>
     public class NewCommand : ICommand
     {
-        private readonly string DefaultSpreadsheetSourceCode = @"worksheet Sheet1 {" + Environment.NewLine + @"}";
+        private const string DefaultNewSpreadsheetResource = "Spready.NewTemplate.txt";
         private const string DefaultSpreadsheetFilename = "Spready1.spready";
 
         public int Run(object options)
@@ -35,7 +34,20 @@ namespace Spready.Commands
 
         private void WriteDefaultSpreadsheetSources(string filePath)
         {
-            File.WriteAllText(filePath, DefaultSpreadsheetSourceCode);
+            File.WriteAllText(filePath, ReadDefaultSourcesFrom(DefaultNewSpreadsheetResource));
+        }
+
+        private string ReadDefaultSourcesFrom(string resourceName)
+        {
+            string sourceCode;
+            var assembly = Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                sourceCode = reader.ReadToEnd();
+            }
+
+            return sourceCode;
         }
 
         private string CreateFullSourcePathFrom(string outputFilename)
@@ -50,10 +62,8 @@ namespace Spready.Commands
             {
                 return outputFilename + ".spready";
             }
-            else
-            {
-                return outputFilename;
-            }
+
+            return outputFilename;
         }
     }
 }

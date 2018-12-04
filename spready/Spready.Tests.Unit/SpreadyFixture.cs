@@ -12,7 +12,7 @@ namespace Spready.Tests.Unit
         protected string InputPath { get; private set; }
         protected string OutputPath { get; private set; }
 
-        public SpreadyFixture()
+        protected SpreadyFixture()
         {
             InputPath = string.Empty;
             OutputPath = string.Empty;
